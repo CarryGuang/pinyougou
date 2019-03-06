@@ -45,6 +45,18 @@ app.controller('baseController',function($scope){
 		return value;
 	}
 	
+	$scope.searchObjectByKey=function(list,key,keyValue){
+		for(var i=0;i<list.length;i++){
+			if(list[i][key]==keyValue){
+				return list[i];
+			}
+			
+		}
+		
+		return null;
+		
+	}
+	
 
 	
 });

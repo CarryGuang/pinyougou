@@ -256,6 +256,17 @@ public class GoodsServiceImpl implements GoodsService {
 		return new PageResult(page.getTotal(), page.getResult());
 	}
 
+		@Override
+		public void updateStatus(Long[] ids, String status) {
+			for(Long id:ids) {
+				TbGoods tbGoods = goodsMapper.selectByPrimaryKey(id);
+				tbGoods.setAuditStatus(status);
+				goodsMapper.updateByPrimaryKey(tbGoods);
+				
+			}
+			
+		}
+
 	
 	
 }

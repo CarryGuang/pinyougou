@@ -98,4 +98,16 @@ public class GoodsController {
 		return goodsService.findPage(goods, page, rows);		
 	}
 	
+	@RequestMapping("/updateStatus")
+	public Result updateStatus(Long[] ids,String status) {
+		try {
+			 goodsService.updateStatus(ids, status);
+			return new Result(true, "成功");
+		} catch (Exception e) {
+			return new Result(false, "失败");
+		}
+		
+
+	}
+	
 }

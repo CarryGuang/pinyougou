@@ -138,6 +138,7 @@ public class ContentServiceImpl implements ContentService {
 				criteria.andCategoryIdEqualTo(categoryId);
 				criteria.andStatusEqualTo("1");//开启状态
 				example.setOrderByClause("sort_order");//排序
+				contentList = contentMapper.selectByExample(example);//获取广告列表
 				
 				redisTemplate.boundHashOps("content").put(categoryId,contentList);//存入缓存	
 				System.out.println("从数据库读取数据放入缓存");

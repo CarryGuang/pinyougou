@@ -6,6 +6,7 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>pinyougou-portal-web</artifactId>
+  <packaging>war</packaging>
   
   <dependencies>
     <!-- Spring -->
@@ -106,5 +107,5 @@
 	  	  </plugin>
 	  </plugins>  
     </build>
-    <packaging>war</packaging>
+    
 </project>

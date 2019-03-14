@@ -1,4 +1,5 @@
 package com.pinyougou.sellergoods.service.impl;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.mysql.fabric.xmlrpc.base.Array;
 import com.pinyougou.mapper.TbBrandMapper;
 import com.pinyougou.mapper.TbGoodsDescMapper;
 import com.pinyougou.mapper.TbGoodsMapper;
@@ -265,6 +267,21 @@ public class GoodsServiceImpl implements GoodsService {
 				
 			}
 			
+		}
+		/**
+		* 根据商品 ID 和状态查询 Item 表信息
+		* @param goodsId
+		* @param status
+		* @return
+		*/
+		@Override
+		public List<TbItem> findItemListByGoodsIdandStatus(Long[] goodsIds, String status) {
+			TbItemExample example=new TbItemExample();
+			com.pinyougou.pojo.TbItemExample.Criteria criteria = example.createCriteria();
+			criteria.andStatusEqualTo(status);//状态
+			criteria.andGoodsIdIn(Arrays.asList(goodsIds));//指定条件SPUID集合
+			
+			return itemMapper.selectByExample(example);
 		}
 
 	

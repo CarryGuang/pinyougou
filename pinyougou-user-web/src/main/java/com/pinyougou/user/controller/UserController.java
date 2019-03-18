@@ -128,7 +128,7 @@ public class UserController {
 		}
 		try {
 			userService.createSmsCode(phone);//生成验证码
-			return new Result(true, "亲,验证码发送成功");
+			return new Result(true, "验证码发送成功");
 		} catch (Exception e) {
 			return new Result(false, "亲,验证码发失败");
 		}

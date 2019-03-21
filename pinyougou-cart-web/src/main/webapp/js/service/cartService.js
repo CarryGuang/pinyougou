@@ -10,6 +10,11 @@ app.service('cartService', function($http) {
 		return $http.get('cart/addGoodsToCartList.do?itemId=' + itemId
 				+ '&num=' + num);
 	}
+	
+	//获取地址列表
+	this.findAddressList=function(){
+		return $http.get('address/findListByLoginUser.do'); 
+	}
 
 	// 求合计
 	this.sum = function(cartList) {
@@ -27,4 +32,9 @@ app.service('cartService', function($http) {
 		}
 		return totalValue;
 	}
+	
+	//保存订单
+	this.submitOrder=function(order){
+		return $http.post('order/add.do',order);
+		}
 });

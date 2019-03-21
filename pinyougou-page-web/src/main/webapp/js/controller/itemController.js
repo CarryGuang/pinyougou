@@ -1,7 +1,7 @@
-//ÉÌÆ·ÏêÏ¸Ò³£¨¿ØÖÆ²ã£©
-app.controller('itemController',function($scope){
+//å•†å“è¯¦ç»†é¡µï¼ˆæ§åˆ¶å±‚ï¼‰
+app.controller('itemController',function($scope,$http){
 	
-	//ÊıÁ¿²Ù×÷
+	//æ•°é‡æ“ä½œ
 	$scope.addNum=function(x){
 		$scope.num= parseInt($scope.num);
 		$scope.num=$scope.num+x;
@@ -10,14 +10,14 @@ app.controller('itemController',function($scope){
 		}
 	}
 	
-	$scope.specificationItems={};//¼ÇÂ¼ÓÃ»§Ñ¡ÔñµÄ¹æ¸ñ
-	//ÓÃ»§Ñ¡Ôñ¹æ¸ñ
+	$scope.specificationItems={};//è®°å½•ç”¨æˆ·é€‰æ‹©çš„è§„æ ¼
+	//ç”¨æˆ·é€‰æ‹©è§„æ ¼
 	$scope.selectSpecification=function(name,value){ 
 		$scope.specificationItems[name]=value;
-		searchSku();//¶ÁÈ¡ sku
+		searchSku();//è¯»å–sku
 		} 
 		
-	//ÅĞ¶ÏÄ³¹æ¸ñÑ¡ÏîÊÇ·ñ±»ÓÃ»§Ñ¡ÖĞ
+	//åˆ¤æ–­æŸè§„æ ¼é€‰é¡¹æ˜¯å¦è¢«ç”¨æˆ·é€‰ä¸­
 	$scope.isSelected=function(name,value){
 	if($scope.specificationItems[name]==value){
 	return true;
@@ -26,13 +26,14 @@ app.controller('itemController',function($scope){
 	} 
 }
 
-	//¼ÓÔØÄ¬ÈÏ SKU
+	//åŠ è½½é»˜è®¤SKU,ä¸ºäº†æ»¡è¶³é¡µé¢ç¬¬ä¸€æ¬¡æ‰“å¼€æ—¶,åŠ è½½å•†å“ä¿¡æ¯
 	$scope.loadSku=function(){
 		$scope.sku=skuList[0];
+		//é‡‡ç”¨æ·±å…‹éš†æŠ€æœ¯,é¿å…å•†å“ä¿¡æ¯ä¸èƒ½ä½¿ç”¨
 		$scope.specificationItems= JSON.parse(JSON.stringify($scope.sku.spec)) ;
 	}
 	
-	//Æ¥ÅäÁ½¸ö¶ÔÏó
+	//åŒ¹é…ä¸¤ä¸ªå¯¹è±¡
 	matchObject=function(map1,map2){ 
 	for(var k in map1){
 		if(map1[k]!=map2[k]){
@@ -47,19 +48,37 @@ app.controller('itemController',function($scope){
 		return true; 
 }
 
-	//²éÑ¯ SKU
+	//æŸ¥è¯¢SKU
 	searchSku=function(){
-		for(var i=0;i<skuList.length;i++ ){
-		if( matchObject(skuList[i].spec ,$scope.specificationItems ) ){
-		$scope.sku=skuList[i];
-		return ;
-		} 
-		} 
-		$scope.sku={id:0,title:'--------',price:0};//Èç¹ûÃ»ÓĞÆ¥ÅäµÄ
+		// å½“å‰å„ç§ç»„åˆè¿›è¡ŒåŒ¹é…
+		for (var i = 0; i < skuList.length; i++) {
+			if (matchObject(skuList[i].spec,
+					$scope.specificationItems)) {
+				$scope.sku = skuList[i];
+				return;
+			}
 		}
-	//Ìí¼ÓÉÌÆ·µ½¹ºÎï³µ
+		// å½“æ‰€æœ‰ç»„åˆéƒ½æ²¡æœ‰æ—¶,å¦‚æœæ²¡æœ‰åŒ¹é…çš„
+		$scope.sku = {
+			id : 0,
+			title : '--------',
+			price : 0
+		};
+	}
+	//æ·»åŠ å•†å“åˆ°è´­ç‰©è½¦
 	$scope.addToCart=function(){
-		alert('skuid:'+$scope.sku.id);
+		//alert('skuid:'+$scope.sku.id);
+		$http.get('http://localhost:9107/cart/addGoodsToCartList.do?itemId='
+				+$scope.sku.id+'&num='+$scope.num,{'withCredentials':true}).success(
+				function(response){
+					if(response.success){
+						//è·³è½¬åˆ°è´­ç‰©è½¦é¡µé¢
+						location.href='http://localhost:9107/cart.html';
+					}else{
+						alert(response.message);
+					}
+				}		
+				)
 	}	
 		
 

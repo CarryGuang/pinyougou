@@ -49,7 +49,7 @@ public class CartController {
 		}else {//如果登录
 			//从redis中提取
 			List<Cart> cartList_redis = cartService.findCartListFromRedis(username);
-			if (cartList_redis.size()>0) {//如果redis中有购物车
+			if (cartList_cookie.size()>0) {//判断当本地购物车中存在数据
 				//合并购物车
 				List<Cart> cartList=cartService.mergeCartList(cartList_redis, cartList_cookie);
 				//清楚本地cookie数据

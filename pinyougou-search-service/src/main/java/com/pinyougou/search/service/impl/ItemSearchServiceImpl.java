@@ -31,6 +31,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import com.alibaba.dubbo.config.annotation.Service;
 
 import com.pinyougou.pojo.TbItem;
+import com.pinyougou.pojo.TbSeckillGoods;
 import com.pinyougou.search.service.ItemSearchService;
 
 @Service(timeout = 9000)
@@ -246,5 +247,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
 		solrTemplate.commit();
 		
 	}
+
+
 
 }

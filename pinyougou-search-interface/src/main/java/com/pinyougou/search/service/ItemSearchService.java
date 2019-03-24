@@ -3,6 +3,8 @@ package com.pinyougou.search.service;
 import java.util.List;
 import java.util.Map;
 
+import com.pinyougou.pojo.TbSeckillGoods;
+
 public interface ItemSearchService {
 	
 	
@@ -24,4 +26,6 @@ public interface ItemSearchService {
 	* @param ids
 	*/
 	public void deleteByGoodsIds(List goodsIdList);
+	
+
 }
